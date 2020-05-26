@@ -17,12 +17,19 @@
   </script>
 
   <style>
+    :root {
+      --black: #04040B;
+      --nickel: #716F6F;
+      --cultured: #F4F4F3;
+      --iceberg: #6CAAD2;
+    }
+
     body {
       margin: 2em;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
-      background: #000;
-      color: #fff;
+      background: var(--black);
+      color: var(--cultured);
     }
 
     img {
@@ -32,10 +39,8 @@
     }
 
     .ql-editor.ql-blank::before {
-      /*To ensure the placeholder text matches regular text color*/
-      color: inherit;
-      /* And make it look a little different */
-      opacity: 80%;
+      /*Color the placeholder text*/
+      color: var(--nickel);
     }
   </style>
 </head>
