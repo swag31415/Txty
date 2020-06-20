@@ -13,11 +13,11 @@
 
   <script>
     function set_word_count(text) {
-      document.getElementById("word-count").innerText = text.split(' ').length + " words"
+      document.getElementById("word-count").innerText = text.trim().split(/\s+|-|\//).length + " words"
     }
 
     var quill = new Quill('#editor', {
-      placeholder: 'Hello Swag!',
+      placeholder: '   Hello Swag!',
     });
 
     quill.on('selection-change', function (range, oldRange, source) {
@@ -38,7 +38,7 @@
     }
 
     body {
-      margin: 2em;
+      margin: 0;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
       background: var(--black);
@@ -46,7 +46,9 @@
     }
 
     #word-count {
-      text-align: right;
+      position: fixed;
+      right: 2em;
+      bottom: 2em;
     }
 
     img {
@@ -55,8 +57,12 @@
       border-radius: 1em;
     }
 
+    .ql-editor {
+      padding: 2em;
+      min-height: 100vh;
+    }
+
     .ql-editor.ql-blank::before {
-      /*Color the placeholder text*/
       color: var(--nickel);
     }
   </style>
