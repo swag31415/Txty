@@ -13,7 +13,7 @@
 
   <script>
     function set_word_count(text) {
-      document.getElementById("word-count").innerText = text.trim().split(/\s+|-|\//).length + " words"
+      document.getElementById("word-count").innerText = text.trim().split(/\s+|-|\//).filter(Boolean).length + " words"
     }
 
     var quill = new Quill('#editor', {
