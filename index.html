@@ -22,10 +22,12 @@
 
     quill.on('selection-change', function (range, oldRange, source) {
       var text = quill.getText(range.index, range.length);
-      set_word_count((text.length > 1) ? set_word_count(text) : set_word_count(quill.getText()))
+      set_word_count((text.length > 0) ? text : quill.getText())
     });
     quill.on('text-change', function (delta, oldDelta, source) {
-      set_word_count(quill.getText())
+      if (quill.getText().length > 0) {
+        set_word_count(quill.getText())
+      }
     });
   </script>
 
