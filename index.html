@@ -109,7 +109,7 @@
         })
           .then(resp => resp.text())
           .then(text => {
-            quill.setText(text, 'color', "#716F6F")
+            quill.setText(text.trim(), 'color', "#716F6F")
             hide_block()
           })
       }
