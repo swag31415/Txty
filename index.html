@@ -36,17 +36,13 @@
     block = $("<div></div>").attr("id", "block")
     function hide_block() {
       block.remove()
+      block.empty()
       quill.focus()
     }
     function show_block(element) {
       $("body").append(block)
       block.append(element)
       element.focus()
-      block.keydown(() => {
-        if (event.key === "Escape") {
-          hide_block()
-        }
-      })
     }
 
     filename_entry = $("<textarea></textarea>").attr({
@@ -65,16 +61,64 @@
       shortKey: 'true',
       handler: (range, context) => {
         show_block(filename_entry)
-        filename_entry.keypress(() => {
+        filename_entry.keydown(() => {
           if (event.key === "Enter") {
             event.preventDefault()
             save(filename_entry.val())
             filename_entry.val('')
             hide_block()
           }
+          if (event.key === "Escape") {
+            hide_block()
+          }
         })
         return false
       }
+    })
+
+    loader = $("<div></div>").attr("class", "loader")
+    password_entry = $("<input></input>").attr({
+      "id": "cent-entry",
+      "cols": "30",
+      "rows": "1",
+      "type": "password",
+      "placeholder": "Enter Password"
+    })
+    key = ""
+
+    function gen_handler(range, context) {
+      if (key === "") {
+        show_block(password_entry)
+        password_entry.keypress(() => {
+          if (event.key === "Enter") {
+            key = password_entry.val()
+            password_entry.val('')
+            hide_block()
+            gen_handler(range, context)
+          }
+        })
+      } else {
+        show_block(loader)
+        fetch("https://us-east1-refined-stream-279021.cloudfunctions.net/bagofwords", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            "key": key,
+            "prompt": quill.getText().trim(),
+          })
+        })
+          .then(resp => resp.text())
+          .then(text => {
+            quill.setText(text, 'color', "#716F6F")
+            hide_block()
+          })
+      }
+    }
+
+    quill.keyboard.addBinding({
+      key: 'G',
+      altKey: 'true',
+      handler: gen_handler
     })
   </script>
 
@@ -139,6 +183,42 @@
 
     a {
       color: var(--iceberg);
+    }
+
+    .loader {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .loader:after {
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      margin: 8px;
+      box-sizing: border-box;
+      border: 32px solid var(--iceberg);
+      border-color: var(--iceberg) transparent var(--iceberg) transparent;
+      animation: loader 1.2s infinite;
+    }
+
+    @keyframes loader {
+      0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
+
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      100% {
+        transform: rotate(1800deg);
+      }
     }
   </style>
 </head>
