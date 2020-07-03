@@ -34,33 +34,43 @@
     });
 
     block = $("<div></div>").attr("id", "block")
+    function hide_block() {
+      block.remove()
+      quill.focus()
+    }
+    function show_block(element) {
+      $("body").append(block)
+      block.append(element)
+      element.focus()
+      block.keydown(() => {
+        if (event.key === "Escape") {
+          hide_block()
+        }
+      })
+    }
 
     filename_entry = $("<textarea></textarea>").attr({
-      "id": "filename-entry",
+      "id": "cent-entry",
       "cols": "30",
       "rows": "1",
-      "placeholder": "Enter Filename"
+      "placeholder": "Enter Filename (esc to cancel)"
     })
 
+    function save(filename) {
+      var blob = new Blob([quill.getText()], { type: 'text/plain;charset=utf-8' })
+      saveAs(blob, filename + (filename.includes('.') ? '' : '.txt'))
+    }
     quill.keyboard.addBinding({
       key: 'S',
       shortKey: 'true',
       handler: (range, context) => {
-        $("body").append(block)
-        block.append(filename_entry)
-        filename_entry.focus()
+        show_block(filename_entry)
         filename_entry.keypress(() => {
-          if (event.which === 13) {
+          if (event.key === "Enter") {
             event.preventDefault()
-            var blob = new Blob([quill.getText()], { type: 'text/plain;charset=utf-8' })
-            if (filename_entry.val().includes('.')) {
-              saveAs(blob, filename_entry.val())
-            } else {
-              saveAs(blob, filename_entry.val() + '.txt')
-            }
-            block.remove()
+            save(filename_entry.val())
             filename_entry.val('')
-            quill.focus()
+            hide_block()
           }
         })
         return false
@@ -104,7 +114,7 @@
       align-items: center;
     }
 
-    #filename-entry {
+    #cent-entry {
       font-size: xx-large;
       background: var(--black);
       color: var(--cultured);
