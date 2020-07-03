@@ -4,9 +4,6 @@
 <body>
   <div id='editor'></div>
   <div id='word-count'>0 words</div>
-  <div id='block'>
-    <textarea id='filename-entry' cols='30' rows='1' placeholder='Enter Filename'></textarea>
-  </div>
 </body>
 
 <head>
@@ -14,48 +11,59 @@
   <link rel='stylesheet' href='https://cdn.quilljs.com/1.3.6/quill.core.css'>
   <script src='https://cdn.quilljs.com/1.3.6/quill.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js'></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script>
     function set_word_count(text) {
-      document.getElementById('word-count').innerText = text.trim().split(/\s+|-|\//).filter(Boolean).length + ' words'
+      $("#word-count").text(text.trim().split(/\s+|-|\//).filter(Boolean).length + ' words')
     }
 
     var quill = new Quill('#editor', {
       placeholder: '   Hello Swag!',
     });
 
-    quill.on('selection-change', function (range, oldRange, source) {
-      var text = quill.getText(range.index, range.length);
-      set_word_count((text.length > 0) ? text : quill.getText())
+    quill.on('selection-change', (range, oldRange, source) => {
+      if (range) {
+        var text = quill.getText(range.index, range.length);
+        set_word_count((text.length > 0) ? text : quill.getText())
+      }
     });
-    quill.on('text-change', function (delta, oldDelta, source) {
+    quill.on('text-change', (delta, oldDelta, source) => {
       if (quill.getText().length > 0) {
         set_word_count(quill.getText())
       }
     });
 
-    var block = document.getElementById('block')
-    var filename_entry = document.getElementById('filename-entry')
+    block = $("<div></div>").attr("id", "block")
+
+    filename_entry = $("<textarea></textarea>").attr({
+      "id": "filename-entry",
+      "cols": "30",
+      "rows": "1",
+      "placeholder": "Enter Filename"
+    })
 
     quill.keyboard.addBinding({
       key: 'S',
       shortKey: 'true',
-      handler: function (range, context) {
-        block.style.display = 'flex'
+      handler: (range, context) => {
+        $("body").append(block)
+        block.append(filename_entry)
         filename_entry.focus()
+        filename_entry.keypress(() => {
+          if (event.which === 13) {
+            event.preventDefault()
+            var blob = new Blob([quill.getText()], { type: 'text/plain;charset=utf-8' })
+            if (filename_entry.val().includes('.')) {
+              saveAs(blob, filename_entry.val())
+            } else {
+              saveAs(blob, filename_entry.val() + '.txt')
+            }
+            block.remove()
+            filename_entry.val('')
+            quill.focus()
+          }
+        })
         return false
-      }
-    })
-
-    filename_entry.addEventListener('keypress', function(e) {
-      if (event.which === 13) {
-        var blob = new Blob([quill.getText()], { type: 'text/plain;charset=utf-8' })
-        if (filename_entry.value.includes('.')) {
-          saveAs(blob, filename_entry.value)
-        } else {
-          saveAs(blob, filename_entry.value + '.txt')
-        }
-        block.style.display = 'none'
-        filename_entry.value = ''
       }
     })
   </script>
@@ -94,7 +102,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      display: none;
     }
 
     #filename-entry {
@@ -120,7 +127,9 @@
       color: var(--nickel);
     }
 
-    a {color: var(--iceberg);}
+    a {
+      color: var(--iceberg);
+    }
   </style>
 </head>
 
