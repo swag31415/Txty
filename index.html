@@ -89,12 +89,15 @@
     function gen_handler(range, context) {
       if (key === "") {
         show_block(password_entry)
-        password_entry.keypress(() => {
+        password_entry.keydown(() => {
           if (event.key === "Enter") {
             key = password_entry.val()
             password_entry.val('')
             hide_block()
             gen_handler(range, context)
+          }
+          if (event.key === "Escape") {
+            hide_block()
           }
         })
       } else {
