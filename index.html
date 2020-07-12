@@ -125,27 +125,50 @@
     })
 
     quill.keyboard.addBinding({
-      key: 219,
+      key: 40, // Arrow Down
       shortKey: 'true',
-      collapsed: false,
       handler: (range, context) => {
         quill.format('header', context.format.header - 1)
       }
     })
 
     quill.keyboard.addBinding({
-      key: 221,
+      key: 38, // Arrow Up
       shortKey: 'true',
-      collapsed: false,
       handler: (range, context) => {
         let h = context.format.header
-        if (!h) {
+        if (h === undefined) {
           quill.format('header', 1)
         } else if (h < 5) {
           quill.format('header', h + 1)
         }
       }
     })
+
+    quill.keyboard.addBinding({
+      key: 39, // Arrow Right
+      shortKey: 'true',
+      handler: (range, context) => {
+        if (context.format.align === undefined) {
+          quill.format('align', 'center')
+        } else if (context.format.align === 'center') {
+          quill.format('align', 'right')
+        }
+      }
+    })
+
+    quill.keyboard.addBinding({
+      key: 37, // Arrow Left
+      shortKey: 'true',
+      handler: (range, context) => {
+        if (context.format.align === 'right') {
+          quill.format('align', 'center')
+        } else if (context.format.align === 'center') {
+          quill.format('align', undefined)
+        }
+      }
+    })
+
   </script>
 
   <style>
