@@ -53,19 +53,19 @@ Quill.register("modules/filesave", function (quill, options) {
   filename_input = document.getElementById("filename-input")
   function show_modal(show) { filename_input.parentElement.style.visibility = show ? "visible" : "hidden" }
   quill.keyboard.addBinding({
-    key: 'S',
-    shortKey: 'true',
+    key: "S",
+    shortKey: "true",
     handler: (range, context) => {
       show_modal(true)
-      window.setTimeout(() => filename_input.focus(), 50) // idk why 0 doesn't work
+      window.setTimeout(() => filename_input.focus(), 50) // idk why 0 doesn"t work
       return false
     }
   })
   filename_input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault()
-      var blob = new Blob([quill.getText()], { type: 'text/plain;charset=utf-8' })
-      saveAs(blob, filename_input.value + (filename_input.value.includes('.') ? '' : '.txt'))
+      var blob = new Blob([quill.getText()], { type: "text/plain;charset=utf-8" })
+      saveAs(blob, filename_input.value + (filename_input.value.includes(".") ? "" : ".txt"))
       filename_input.value = ""
     }
     if (event.key === "Escape" || event.key === "Enter") {
