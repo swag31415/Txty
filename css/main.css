@@ -1,0 +1,41 @@
+:root {
+  --black: #04040B;
+  --nickel: #716F6F;
+  --cultured: #F4F4F3;
+  --iceberg: #6CAAD2;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  background: var(--black);
+  color: var(--cultured);
+}
+
+#word-count {
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #FFFFFF88;
+  visibility: hidden;
+  transition: 400ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.big-input {
+  font-size: xx-large;
+  background: var(--black);
+  color: var(--cultured);
+  border: thick solid var(--black);
+  resize: none;
+}
