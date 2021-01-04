@@ -50,8 +50,6 @@ Quill.register("modules/headers", function (quill, options) {
 })
 
 Quill.register("modules/filesave", function (quill, options) {
-  filename_input = document.getElementById("filename-input")
-  function show_modal(show) { filename_input.parentElement.style.visibility = show ? "visible" : "hidden" }
   quill.keyboard.addBinding({
     key: "S",
     shortKey: "true",
@@ -65,6 +63,14 @@ Quill.register("modules/filesave", function (quill, options) {
   })
 })
 
+Quill.register("modules/caching", function (quill, options) {
+  const cached = Cookies.get("cache")
+  if (cached) quill.updateContents(JSON.parse(cached))
+  quill.on("text-change", delta => {
+    Cookies.set("cache", JSON.stringify(delta))
+  })
+})
+
 const username = Cookies.get("username")
 
 var quill = new Quill("#editor", {
@@ -72,7 +78,8 @@ var quill = new Quill("#editor", {
     word_count: { count_box: "#word-count" },
     alignment: true,
     headers: true,
-    filesave: true
+    filesave: true,
+    caching: true
   },
   placeholder: `Hey ${username}!`
 })
