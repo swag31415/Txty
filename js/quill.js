@@ -65,6 +65,8 @@ Quill.register("modules/filesave", function (quill, options) {
   })
 })
 
+const username = Cookies.get("username")
+
 var quill = new Quill("#editor", {
   modules: {
     word_count: { count_box: "#word-count" },
@@ -72,5 +74,10 @@ var quill = new Quill("#editor", {
     headers: true,
     filesave: true
   },
-  placeholder: "Hey Swag!"
+  placeholder: `Hey ${username}!`
+})
+
+if (!username) show_prompt("Type your name!", false, (uname) => {
+  quill.root.dataset.placeholder = `Hey ${uname}!`
+  Cookies.set("username", uname)
 })
