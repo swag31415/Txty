@@ -65,10 +65,10 @@ Quill.register("modules/filesave", function (quill, options) {
 
 Quill.register("modules/caching", function (quill, options) {
   const cached = Cookies.get("cache")
-  if (cached) quill.updateContents(JSON.parse(cached))
-  quill.on("text-change", delta => {
-    Cookies.set("cache", JSON.stringify(delta))
-  })
+  if (cached) quill.setContents(JSON.parse(cached))
+  quill.on("text-change", () =>
+    Cookies.set("cache", JSON.stringify(quill.getContents()))
+  )
 })
 
 const username = Cookies.get("username")
