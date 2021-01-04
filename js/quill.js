@@ -80,4 +80,4 @@ var quill = new Quill("#editor", {
 if (!username) show_prompt("Type your name!", false, (uname) => {
   quill.root.dataset.placeholder = `Hey ${uname}!`
   Cookies.set("username", uname)
-})
+}, () => quill.focus())
