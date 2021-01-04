@@ -65,11 +65,11 @@ Quill.register("modules/filesave", function (quill, options) {
 
 Quill.register("modules/caching", function (quill, options) {
   quill.on("text-change", () =>
-    Cookies.set("cache", JSON.stringify(quill.getContents()))
+    localStorage.setItem("cache", JSON.stringify(quill.getContents()))
   )
 })
 
-const username = Cookies.get("username")
+const username = localStorage.getItem("username")
 
 var quill = new Quill("#editor", {
   modules: {
@@ -84,8 +84,8 @@ var quill = new Quill("#editor", {
 
 if (!username) show_prompt("Type your name!", false, (uname) => {
   quill.root.dataset.placeholder = `Hey ${uname}!`
-  Cookies.set("username", uname)
+  localStorage.setItem("username", uname)
 }, () => quill.focus())
 
-const cached = Cookies.get("cache")
+const cached = localStorage.getItem("cache")
 if (cached) quill.setContents(JSON.parse(cached))
