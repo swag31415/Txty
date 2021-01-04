@@ -56,21 +56,11 @@ Quill.register("modules/filesave", function (quill, options) {
     key: "S",
     shortKey: "true",
     handler: (range, context) => {
-      show_modal(true)
-      window.setTimeout(() => filename_input.focus(), 50) // idk why 0 doesn"t work
+      show_prompt("Enter Filename (esc to cancel)", true, (filename) => {
+        var blob = new Blob([quill.getText()], { type: "text/plain;charset=utf-8" })
+        saveAs(blob, filename + (filename.includes(".") ? "" : ".txt"))
+      }, () => quill.focus())
       return false
-    }
-  })
-  filename_input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault()
-      var blob = new Blob([quill.getText()], { type: "text/plain;charset=utf-8" })
-      saveAs(blob, filename_input.value + (filename_input.value.includes(".") ? "" : ".txt"))
-      filename_input.value = ""
-    }
-    if (event.key === "Escape" || event.key === "Enter") {
-      show_modal(false)
-      quill.focus()
     }
   })
 })
