@@ -4,5 +4,5 @@
 }
 
 .ql-editor.ql-blank::before {
-  color: var(--nickel);
+  color: var(--mid);
 }
