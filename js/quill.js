@@ -84,6 +84,11 @@ Quill.register("modules/gpt3", function (quill, options) {
   })
 })
 
+// Use <div> instead of <p> to prevent unexpected copy behavior
+const Block = Quill.import('blots/block')
+Block.tagName = 'DIV'
+Quill.register(Block, true)
+
 const username = localStorage.getItem("username")
 
 var quill = new Quill("#editor", {
@@ -95,7 +100,8 @@ var quill = new Quill("#editor", {
     caching: true,
     gpt3: true
   },
-  placeholder: `Hey ${username}!`
+  placeholder: `Hey ${username}!`,
+  scrollingContainer: 'html'
 })
 
 if (!username) show_prompt("Type your name!", false, (uname) => {
