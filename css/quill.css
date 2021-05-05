@@ -3,6 +3,10 @@
   font-size: large;
 }
 
+.ql-clipboard {
+  position: fixed;
+}
+
 .ql-editor.ql-blank::before {
   color: var(--mid);
 }

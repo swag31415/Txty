@@ -100,7 +100,8 @@ var quill = new Quill("#editor", {
     caching: true,
     gpt3: true
   },
-  placeholder: `Hey ${username}!`
+  placeholder: `Hey ${username}!`,
+  scrollingContainer: 'html'
 })
 
 if (!username) show_prompt("Type your name!", false, (uname) => {
