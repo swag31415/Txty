@@ -55,8 +55,8 @@ Quill.register("modules/filesave", function (quill, options) {
     shortKey: "true",
     handler: (range, context) => {
       show_prompt("Enter Filename (esc to cancel)", true, (filename) => {
-        var blob = new Blob([quill.getText()], { type: "text/plain;charset=utf-8" })
-        saveAs(blob, filename + (filename.includes(".") ? "" : ".txt"))
+        var blob = new Blob([tds.turndown(quill.root)], { type: "text/plain;charset=utf-8" })
+        saveAs(blob, filename + (filename.includes(".") ? "" : ".md"))
       }, () => quill.focus())
       return false
     }
