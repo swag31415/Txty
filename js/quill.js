@@ -69,6 +69,21 @@ Quill.register("modules/caching", function (quill, options) {
   )
 })
 
+Quill.register("modules/gpt3", function (quill, options) {
+  quill.keyboard.addBinding({
+    key: 'G',
+    altKey: 'true',
+    handler: (range, context) => {
+      range = quill.getSelection()
+      if (range && localStorage.getItem('api-key') !== null) {
+        [s, e] = range.length == 0 ? [0, range.index] : [range.index, range.length]
+        text = quill.getText(s, e)
+        complete(localStorage.getItem('api-key'), text).then(txt => quill.insertText(e, txt))
+      }
+    }
+  })
+})
+
 const username = localStorage.getItem("username")
 
 var quill = new Quill("#editor", {
@@ -77,7 +92,8 @@ var quill = new Quill("#editor", {
     alignment: true,
     headers: true,
     filesave: true,
-    caching: true
+    caching: true,
+    gpt3: true
   },
   placeholder: `Hey ${username}!`
 })
