@@ -17,3 +17,23 @@ function show_prompt(text, is_optional, handler, on_exit) {
     }
   }
 }
+
+// Complete text via GPT-3
+async function complete(key, query) {
+  resp = await fetch("https://api.openai.com/v1/engines/curie/completions", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`
+    },
+    body: JSON.stringify({
+      prompt: query,
+      temperature: 0.8,
+      presence_penalty: 0.1,
+      frequency_penalty: 0.2,
+      max_tokens: 128
+    })
+  })
+  data = await resp.json()
+  return data.choices[0].text
+}
