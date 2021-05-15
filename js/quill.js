@@ -64,9 +64,9 @@ Quill.register("modules/filesave", function (quill, options) {
 })
 
 Quill.register("modules/caching", function (quill, options) {
-  quill.on("text-change", () =>
+  quill.on("text-change", () => {
     localStorage.setItem("cache", JSON.stringify(quill.getContents()))
-  )
+  })
 })
 
 Quill.register("modules/gpt3", function (quill, options) {
@@ -90,6 +90,7 @@ Block.tagName = 'DIV'
 Quill.register(Block, true)
 
 const username = localStorage.getItem("username")
+const cached = localStorage.getItem("cache")
 
 var quill = new Quill("#editor", {
   modules: {
@@ -109,5 +110,4 @@ if (!username) show_prompt("Type your name!", false, (uname) => {
   localStorage.setItem("username", uname)
 }, () => quill.focus())
 
-const cached = localStorage.getItem("cache")
 if (cached) quill.setContents(JSON.parse(cached))
