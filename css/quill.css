@@ -1,6 +1,6 @@
 .ql-editor {
-  min-height: 100vh;
   font-size: large;
+  padding-bottom: calc(100vh - 3em);
 }
 
 .ql-clipboard {
