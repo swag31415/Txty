@@ -103,6 +103,14 @@ Quill.register('modules/colors', function (quill, options) {
   }))
 })
 
+Quill.register('modules/strike', function (quill, options) {
+  quill.keyboard.addBinding({
+    key: 's',
+    altKey: 'true',
+    handler: (range, context) => quill.format('strike', true)
+  })
+})
+
 // Use <div> instead of <p> to prevent unexpected copy behavior
 const Block = Quill.import('blots/block')
 Block.tagName = 'DIV'
@@ -119,7 +127,8 @@ var quill = new Quill("#editor", {
     filesave: true,
     caching: true,
     gpt3: true,
-    colors: true
+    colors: true,
+    strike: true
   },
   placeholder: `Hey ${username}!`,
   scrollingContainer: 'html'
