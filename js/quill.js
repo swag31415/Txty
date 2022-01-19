@@ -140,3 +140,16 @@ if (!username) show_prompt("Type your name!", false, (uname) => {
 }, () => quill.focus())
 
 if (cached) quill.setContents(JSON.parse(cached))
+
+// Readme stuff
+async function fetch_text(url, params) {
+  let res = await fetch(url, params)
+  if (!res.ok) throw Error(res.statusText)
+  return await res.text()
+}
+
+fetch_text('https://swag31415.github.io/Txty/readme.md').then(text => {
+  text = text.match(/## Features[\s\S]*?I don't feel like listing them lmao/gm)
+  text = 'Welcome to Txty! Swag\'s text editor.\n\n' + text
+  quill.root.dataset.placeholder += '\n\n' + text
+})

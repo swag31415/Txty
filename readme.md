@@ -11,13 +11,15 @@ My very own text editor, built right into the browser. Find it [here](https://sw
   - By default, the file saves as a markdown file, which can be opened by any text editor. To save as a different file type include the file extension.
     - For example to save as a text file type `foo.txt` where `foo` is your filename
     - Everything is converted to markdown syntax, and images are converted to base64
-- If you have a GPT-3 api key you can use `localStorage.setItem('api-key', foo)` where foo is the api key to enable text generation
+- If you have a GPT-3 api key you can use `localStorage.setItem('api-key', foo)` in the browser console where `foo` is the api key to enable text generation
   - Afterward, you can simply press `Alt + G` to generate some text
+- Use alt and the number keys to change text color
 
 ### Common Hotkeys
 - `Control + B` to bold
 - `Control + U` to underline
 - `Control + I` to italisize
+- `Alt + S` to strike-through text
 - `Control + X` to cut
 - `Control + C` to copy
 - `Control + V` to paste
