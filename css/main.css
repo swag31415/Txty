@@ -2,6 +2,7 @@
   --back: black;
   --fore: white;
   --mid: #bbb;
+  --select: #001986;
 }
 
 body {
@@ -49,3 +50,6 @@ body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+::-moz-selection { color: inherit; background: var(--select); }
+::selection { color: inherit; background: var(--select); }

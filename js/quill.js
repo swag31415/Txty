@@ -84,6 +84,25 @@ Quill.register("modules/gpt3", function (quill, options) {
   })
 })
 
+Quill.register('modules/colors', function (quill, options) {
+  const keymap = {
+    '1': '#9bf6ff',
+    '2': '#fdffb6',
+    '3': '#caffbf',
+    '4': '#ffd6a5',
+    '5': '#ffadad',
+    '6': '#a0c4ff',
+    '7': '#bdb2ff',
+    '8': '#ffc6ff',
+    '9': 'white'
+  }
+  Object.entries(keymap).forEach(([k, v]) => quill.keyboard.addBinding({
+    key: k,
+    altKey: 'true',
+    handler: (range, context) => quill.format('color', v)
+  }))
+})
+
 // Use <div> instead of <p> to prevent unexpected copy behavior
 const Block = Quill.import('blots/block')
 Block.tagName = 'DIV'
@@ -99,7 +118,8 @@ var quill = new Quill("#editor", {
     headers: true,
     filesave: true,
     caching: true,
-    gpt3: true
+    gpt3: true,
+    colors: true
   },
   placeholder: `Hey ${username}!`,
   scrollingContainer: 'html'
