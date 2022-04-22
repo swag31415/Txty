@@ -22,6 +22,7 @@ My very own text editor, built right into the browser. Find it [here](https://sw
 - `Alt + S` to strike-through text
 - `Control + X` to cut
 - `Control + C` to copy
+  - `Alt + C` to copy Markdown code
 - `Control + V` to paste
   - By default, this preserves all formatting. To paste without formatting use `Control + Shift + V`
   - You can also paste images

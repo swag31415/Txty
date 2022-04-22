@@ -111,6 +111,19 @@ Quill.register('modules/strike', function (quill, options) {
   })
 })
 
+Quill.register('modules/strike', function (quill, options) {
+  quill.keyboard.addBinding({
+    key: 'c',
+    altKey: 'true',
+    handler: (range, context) => {
+      range = quill.getSelection()
+      let tmp = new Quill(document.createElement('div'))
+      tmp.setContents(quill.getContents(range.index, range.length))
+      return navigator.clipboard.writeText(tds.turndown(tmp.root))
+    }
+  })
+})
+
 // Use <div> instead of <p> to prevent unexpected copy behavior
 const Block = Quill.import('blots/block')
 Block.tagName = 'DIV'
