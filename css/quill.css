@@ -3,6 +3,12 @@
   padding-bottom: calc(100vh - 3em);
 }
 
+@media print {
+  .ql-editor {
+    padding-bottom: 0px;
+  }
+}
+
 .ql-clipboard {
   position: fixed;
 }

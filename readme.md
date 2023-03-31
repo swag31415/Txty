@@ -33,8 +33,6 @@ My very own text editor, built right into the browser. Find it [here](https://sw
 - `Control + F` to search
 - Use control and plus and minus keys to change font size
 - `Control + P` to print page
-  - The black background shows up in the print. To remove it uncheck "include background graphics"
-  - I find setting margins to none gets the best looking prints
 - ... there are more but I don't feel like listing them lmao
 
 ## License

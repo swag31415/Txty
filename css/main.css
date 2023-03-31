@@ -5,6 +5,15 @@
   --select: #001986;
 }
 
+@media print {
+  :root {
+    --back: white;
+    --fore: black;
+    --mid: #444;
+    --select: #0099e6;
+  }
+}
+
 body {
   margin: 0;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
@@ -16,6 +25,12 @@ body {
   position: fixed;
   right: 2em;
   bottom: 2em;
+}
+
+@media print {
+  #word-count {
+    display: none;
+  }
 }
 
 .modal {
